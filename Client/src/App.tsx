@@ -1,18 +1,30 @@
-import { useState } from 'react'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import './App.css'
-import { Home, Login } from './pages'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import PrivateRoute from './PrivateRoute';
+import { Home, LoginPage, SignPage } from './pages';
 
-const router = createBrowserRouter([
-  {path:'/',element:<Home/>},
-  {path:'/login',element:<Login/>}
-])
+
+
+// Higher-order component to wrap each route element with ErrorBoundary
+
 function App() {
-  const [count, setCount] = useState(0)
-
+  
+  
   return (
     <>
-      <RouterProvider router={router}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/sign' element={<SignPage/>}/>
+          <Route  element={<PrivateRoute/>}>
+            
+            <Route path='/' element={<Home/>}/>
+            
+          </Route>
+        </Routes>
+      </BrowserRouter>
+     
+     
     </>
   )
 }
